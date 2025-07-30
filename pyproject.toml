@@ -4,7 +4,7 @@ version = "0.0.4"
 description = "Helpful utilities for AI Sentinel toxicity detection"
 readme = "README.md"
 requires-python = ">=3.11"
-author =  Althea Masetti Zannini","Reetu Raj Harsh
+author =  "Althea Masetti Zannini","Reetu Raj Harsh
 author-email =  althea.masettizannini@domyn.com","reeturaj.harsh@domyn.com
 
 dependencies = [

@@ -17,7 +17,6 @@ dependencies = [
     "requests>=2.5.4.1",
 ]
 authors = [
-    { name = "Reetu Raj Harsh", email = "reeturaj.harsh@domyn.com" },
     { name = "Althea Masetti Zannini", email = "althea.masettizannini@domyn.com" },
 ]
 

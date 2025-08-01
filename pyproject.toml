@@ -13,12 +13,19 @@ dependencies = [
     "pydantic>=2.11.7",
     "python-dotenv>=0.10.2",
     "requests>=2.5.4.1",
+    "vllm>=0.9.1",
 ]
 authors = [
     { name = "Althea Masetti Zannini", email = "althea.masettizannini@domyn.com" },
-     { name = "Reetu Raj Harsh", email = "reeturaj.harsh@domyn.com" }
+    { name = "Reetu Raj Harsh", email = "reeturaj.harsh@domyn.com" }
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.0",
+    "uv>=0.8.4",
+]

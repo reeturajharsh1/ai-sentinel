@@ -60,7 +60,7 @@ class TransformersClient(BaseLLMClient):
         ).to(self.client.device)
 
         response_start_time: datetime = datetime.utcnow()
-        response = self.client.generate(**inputs)
+        response = self.client.generate(**inputs, max_new_tokens=512)
         response = self.tokenizer.decode(response[0][inputs["input_ids"].shape[-1]:])
         response_end_time: datetime = datetime.utcnow()
 

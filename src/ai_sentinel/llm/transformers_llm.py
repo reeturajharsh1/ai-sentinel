@@ -1,3 +1,4 @@
+import json
 from typing import Optional, Any
 from datetime import datetime
 
@@ -22,7 +23,7 @@ class TransformersClient(BaseLLMClient):
         self.tokenizer = AutoTokenizer.from_pretrained(self.model)
         self.client = AutoModelForCausalLM.from_pretrained(self.model)
 
-    def generate_text(
+    def generate_text_async(
             self, 
             prompt: str, 
             system_prompt: Optional[str] = None, 
@@ -64,31 +65,42 @@ class TransformersClient(BaseLLMClient):
         response = self.tokenizer.decode(response[0][inputs["input_ids"].shape[-1]:])
         response_end_time: datetime = datetime.utcnow()
 
-        return response # doesn't work correctly rn
+        return self.format_llm_response(response, response_start_time, response_end_time)
 
-    def format_llm_response(self, response) -> LLMResponse:
+    '''
+    ```
+    {
+    "is_toxic": true,
+    "confidence": 0.95,
+    "categories": ["threats", "violence"],
+    "reason": "The text contains a direct threat of violence, specifically hitting the speaker with a baseball bat, which implies a physical attack. This constitutes a threat of harm and falls under the threats and violence categories.",
+    "score": "high"
+    }
+    ```
+    '''
+    def format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
             '''Convert response to built in Model type to a response type of LLMResponse'''
+            cleaned_response = response.strip('```')
+            try:
+                response_dict = json.loads(cleaned_response)
+            except ValueError:
+                raise Exception('llm response couldnt be converted to a dict')
+
 
             output: LLMResponse = LLMResponse(
-                content=response.choices[0].message.content,
-                model = self.model
+                content=response_dict,
+                model = self.model,
+                response_time_ms = start_time.timestamp() - end_time.timestamp()
             )
-            output.usage = {
-                'model_tokens': response.usage.completion_tokens,
-                'prompt_tokens': response.usage.prompt_tokens,
-                'total_tokens': response.usage.total_tokens,
-            }
-
-            output.response_time_ms = output.timestamp.timestamp() - response.created
-            output.finish_reason = response.choices[0].finish_reason
             return output
     
-    
-    def generate_text_async(self, prompt, system_prompt = None, context = None, temperature = 0.7, **kwargs):
-        return super().generate_text_async(prompt, system_prompt, context, temperature, **kwargs)
-    
     def validate_async(self):
-        return super().validate_async()
+        try:
+            self.client.models.list()
+            return True
+        except Exception as e: 
+            print(f'An unexpected error occurred during API key validation: {e}')
+            return False
     
     def provider_name(self):
-        pass
+        return f'Transformers Open Source: {self.model}'

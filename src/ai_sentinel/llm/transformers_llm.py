@@ -8,6 +8,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from ai_sentinel.llm.base import BaseLLMClient
 from ai_sentinel.core.models import LLMResponse
+from ai_sentinel.guards.toxicity_guard import ToxicityResult
 
 class TransformersClient(BaseLLMClient):
     '''Open Source LLM client implementation using Transformers framework from Huggingface'''
@@ -79,19 +80,23 @@ class TransformersClient(BaseLLMClient):
         dict_end_idx = response[dict_start_idx:].find('}')
         if dict_start_idx == -1 or dict_end_idx == -1:
             raise ValueError('LLM response does not contain a dictionary/json-compatible object')
+        return cleaned
 
     def format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
         cleaned_response = self.clean_response(response)
-        response_schema = LLMResponse.model_json_schema()
+        print('cleaned response: ', cleaned_response)
+        toxicity_schema = ToxicityResult.model_json_schema()
         try:
-            jsonschema.validate(instance=cleaned_response, schema=response_schema)
             response_dict = json.loads(cleaned_response)
+            jsonschema.validate(instance=response_dict, schema=toxicity_schema)
         except jsonschema.ValidationError as e:
             print(f"Validation Error: {e.message}")
+        except json.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e.message}")
 
         output: LLMResponse = LLMResponse(
-            content=response_dict,
+            content=json.dumps(response_dict),
             model = self.model,
             response_time_ms = start_time.timestamp() - end_time.timestamp()
         )

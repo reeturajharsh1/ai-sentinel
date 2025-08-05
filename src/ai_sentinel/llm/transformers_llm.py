@@ -26,7 +26,7 @@ class TransformersClient(BaseLLMClient):
         self.tokenizer = AutoTokenizer.from_pretrained(self.model)
         self.client = AutoModelForCausalLM.from_pretrained(self.model)
 
-    def generate_text_async(
+    async def generate_text_async(
             self, 
             prompt: str, 
             system_prompt: Optional[str] = None, 
@@ -69,8 +69,8 @@ class TransformersClient(BaseLLMClient):
         response_end_time: datetime = datetime.utcnow()
 
         print('LLM response before formatting: ', response)
-
-        return self.format_llm_response(response, response_start_time, response_end_time)
+        formatted_response: LLMResponse = self.format_llm_response(response, response_start_time, response_end_time)
+        return formatted_response
 
     def clean_response(self, response) -> str:
         cleaned = response.strip('```')
@@ -103,7 +103,7 @@ class TransformersClient(BaseLLMClient):
         return output
 
     
-    def validate_async(self):
+    async def validate_async(self):
         try:
             self.client.models.list()
             return True

@@ -192,6 +192,5 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [anthropic]: https://www.anthropic.com/
 [open-source-list]: https://huggingface.co/
 <!-- THIRD-PARTY RESOURCES -->
-[pypi-link]: https://pypi.org/project/readmeai/
 [pypi-link]: https://pypi.org/project/ai-sentinel/
 

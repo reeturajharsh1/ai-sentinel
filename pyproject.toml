@@ -9,10 +9,12 @@ requires-python = ">=3.11"
 dependencies = [
     "google-genai>=1.9.0",
     "google-generativeai>=0.8.5",
+    "jsonschema>=4.25.0",
     "openai>=0.11.5",
     "pydantic>=2.11.7",
     "python-dotenv>=0.10.2",
     "requests>=2.5.4.1",
+    "transformers>=4.54.1",
     "vllm>=0.9.1",
 ]
 authors = [

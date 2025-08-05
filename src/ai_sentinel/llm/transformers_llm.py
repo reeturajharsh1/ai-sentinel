@@ -1,7 +1,9 @@
 import json
+import re
 from typing import Optional, Any
 from datetime import datetime
 
+import jsonschema
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from ai_sentinel.llm.base import BaseLLMClient
@@ -65,34 +67,36 @@ class TransformersClient(BaseLLMClient):
         response = self.tokenizer.decode(response[0][inputs["input_ids"].shape[-1]:])
         response_end_time: datetime = datetime.utcnow()
 
+        print('LLM response before formatting: ', response)
+
         return self.format_llm_response(response, response_start_time, response_end_time)
 
-    '''
-    ```
-    {
-    "is_toxic": true,
-    "confidence": 0.95,
-    "categories": ["threats", "violence"],
-    "reason": "The text contains a direct threat of violence, specifically hitting the speaker with a baseball bat, which implies a physical attack. This constitutes a threat of harm and falls under the threats and violence categories.",
-    "score": "high"
-    }
-    ```
-    '''
+    def clean_response(self, response) -> str:
+        cleaned = response.strip('```')
+        cleaned = re.sub(r'<.*?>', '', cleaned)
+
+        dict_start_idx = response.find('{')
+        dict_end_idx = response[dict_start_idx:].find('}')
+        if dict_start_idx == -1 or dict_end_idx == -1:
+            raise ValueError('LLM response does not contain a dictionary/json-compatible object')
+
     def format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
-            '''Convert response to built in Model type to a response type of LLMResponse'''
-            cleaned_response = response.strip('```')
-            try:
-                response_dict = json.loads(cleaned_response)
-            except ValueError:
-                raise Exception('llm response couldnt be converted to a dict')
+        '''Convert response to built in Model type to a response type of LLMResponse'''
+        cleaned_response = self.clean_response(response)
+        response_schema = LLMResponse.model_json_schema()
+        try:
+            jsonschema.validate(instance=cleaned_response, schema=response_schema)
+            response_dict = json.loads(cleaned_response)
+        except jsonschema.ValidationError as e:
+            print(f"Validation Error: {e.message}")
 
+        output: LLMResponse = LLMResponse(
+            content=response_dict,
+            model = self.model,
+            response_time_ms = start_time.timestamp() - end_time.timestamp()
+        )
+        return output
 
-            output: LLMResponse = LLMResponse(
-                content=response_dict,
-                model = self.model,
-                response_time_ms = start_time.timestamp() - end_time.timestamp()
-            )
-            return output
     
     def validate_async(self):
         try:

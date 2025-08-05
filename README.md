@@ -183,6 +183,12 @@ client = AzureOpenAIClient(
 
 This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
+## Changelog
+    v0.0.6: Change authorship
+    v0.0.2: Adjust authorship and maintainers
+    v0.0.1: Initial release
+
+
 <!-- REFERENCE LINKS -->
 <!-- AI-SENTINEL RESOURCES -->
 [license]: ai-sentinel\LICENSE

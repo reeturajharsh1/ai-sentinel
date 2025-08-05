@@ -1,9 +1,10 @@
 import json
+import jsonschema
 import re
+
 from typing import Optional, Any
 from datetime import datetime
 
-import jsonschema
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from ai_sentinel.llm.base import BaseLLMClient
@@ -68,7 +69,6 @@ class TransformersClient(BaseLLMClient):
         response = self.tokenizer.decode(response[0][inputs["input_ids"].shape[-1]:])
         response_end_time: datetime = datetime.utcnow()
 
-        print('LLM response before formatting: ', response)
         formatted_response: LLMResponse = self.format_llm_response(response, response_start_time, response_end_time)
         return formatted_response
 
@@ -84,9 +84,10 @@ class TransformersClient(BaseLLMClient):
 
     def format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
+        
         cleaned_response = self.clean_response(response)
-        print('cleaned response: ', cleaned_response)
         toxicity_schema = ToxicityResult.model_json_schema()
+
         try:
             response_dict = json.loads(cleaned_response)
             jsonschema.validate(instance=response_dict, schema=toxicity_schema)
@@ -102,7 +103,6 @@ class TransformersClient(BaseLLMClient):
         )
         return output
 
-    
     async def validate_async(self):
         try:
             self.client.models.list()

@@ -21,6 +21,9 @@ AI Sentinel can be installed from either `PyPI <https://pypi.org/project/ai-sent
 .. or # TEST THIS FIRST
    uv run --with ai-sentinel --no-project -- python -c "import ai_sentinel"
 
+Requirements
+-------
+- Python 3.11+
 
 .. toctree::
     :maxdepth: 2

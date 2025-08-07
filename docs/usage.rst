@@ -7,6 +7,7 @@ Basic Usage
 Here's how to use the basic functionality of ai_sentinel:
 
 .. code-block:: python
+
     from ai_sentinel import AzureOpenAIClient, ToxicityGuard
 
     # Initialize LLM client
@@ -35,6 +36,7 @@ Async Usage
 Generate text and validate responses asynchronously.
 
 .. code-block:: python
+    
     import asyncio
     from ai_sentinel import AzureOpenAIClient, ToxicityGuard
 

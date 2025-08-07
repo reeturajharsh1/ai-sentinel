@@ -14,12 +14,12 @@ and categorizing harmful content in text.
 Install
 =======
 
-AI Sentinel can be installed from either `PyPI <https://pypi.org/project/ai-sentinel/>`_ or
-`uv <https://anaconda.org/conda-forge/shap>`_::
+AI Sentinel can be installed from either `PyPI <https://pypi.org/project/ai-sentinel/>`_ ::
 
     pip install ai_sentinel
-    .. or # TEST THIS FIRST
-    uv run --with ai-sentinel --no-project -- python -c "import ai_sentinel"
+    
+.. or # TEST THIS FIRST
+   uv run --with ai-sentinel --no-project -- python -c "import ai_sentinel"
 
 
 .. toctree::

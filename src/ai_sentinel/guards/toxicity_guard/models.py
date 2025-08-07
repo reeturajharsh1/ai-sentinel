@@ -33,7 +33,7 @@ class ToxicityScore(str, Enum):
     MEDIUM = 'medium'
     HIGH = 'high'
 
-def ensure_categories_type(value: Any) -> ToxicityCategories:
+def _ensure_categories_type(value: Any) -> ToxicityCategories:
     '''Modify {value} to ensure it meets type requirements'''
     categories: list = []
     result: list = []
@@ -54,7 +54,7 @@ def ensure_categories_type(value: Any) -> ToxicityCategories:
     return result
 
 class ToxicityResult(BaseModel):
-    '''Strucutred output from LLM toxicity assessment'''
+    '''Structured output from LLM toxicity assessment'''
     
     is_toxic: bool = Field(description='assessment of whether the content is toxic')
     confidence: float = Field(
@@ -62,7 +62,7 @@ class ToxicityResult(BaseModel):
         le=1.0, 
         description='confidence that the text is toxic (0.0-1.0)'
     )
-    categories: Annotated[list[ToxicityCategories], BeforeValidator(ensure_categories_type)] = Field(
+    categories: Annotated[list[ToxicityCategories], BeforeValidator(_ensure_categories_type)] = Field(
         default_factory=list, 
         description='list of toxic categories detected in content'
     )

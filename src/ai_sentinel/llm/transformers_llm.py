@@ -69,10 +69,10 @@ class TransformersClient(BaseLLMClient):
         response = self.tokenizer.decode(response[0][inputs["input_ids"].shape[-1]:])
         response_end_time: datetime = datetime.utcnow()
 
-        formatted_response: LLMResponse = self.format_llm_response(response, response_start_time, response_end_time)
+        formatted_response: LLMResponse = self._format_llm_response(response, response_start_time, response_end_time)
         return formatted_response
 
-    def clean_response(self, response) -> str:
+    def _clean_response(self, response) -> str:
         cleaned = response.strip('```')
         cleaned = re.sub(r'<.*?>', '', cleaned)
 
@@ -82,10 +82,10 @@ class TransformersClient(BaseLLMClient):
             raise ValueError('LLM response does not contain a dictionary/json-compatible object')
         return cleaned
 
-    def format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
+    def _format_llm_response(self, response, start_time: datetime, end_time: datetime) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
         
-        cleaned_response = self.clean_response(response)
+        cleaned_response = self._clean_response(response)
         toxicity_schema = ToxicityResult.model_json_schema()
 
         try:

@@ -94,10 +94,10 @@ class OpenSourceVLLM(BaseLLMClient):
                 messages=message,
                 temperature=temperature
             )
-        formatted_response: LLMResponse = self.format_llm_response(response)
+        formatted_response: LLMResponse = self._format_llm_response(response)
         return formatted_response
     
-    def format_llm_response(self, response: ChatCompletion | ParsedChatCompletion) -> LLMResponse:
+    def _format_llm_response(self, response: ChatCompletion | ParsedChatCompletion) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
 
         output: LLMResponse = LLMResponse(

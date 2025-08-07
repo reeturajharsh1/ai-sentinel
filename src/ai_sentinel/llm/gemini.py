@@ -71,10 +71,10 @@ class GeminiClient(BaseLLMClient):
         if not response.create_time: # gemini keeps not returning shit
             response.create_time = response_start_time
 
-        formatted_response: LLMResponse = self.format_llm_response(response)
+        formatted_response: LLMResponse = self._format_llm_response(response)
         return formatted_response
     
-    def format_llm_response(self, response: types.GenerateContentResponse) -> LLMResponse:
+    def _format_llm_response(self, response: types.GenerateContentResponse) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
         output: LLMResponse = LLMResponse(
             content=response.text,

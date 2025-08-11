@@ -22,7 +22,7 @@ Work in progress.
         :glob:
         :maxdepth: 1
 
-        example_notebooks/api_examples/core/*
+        doc_notebooks/api_examples/core/*
 
 .. _guards_examples:
 
@@ -37,7 +37,7 @@ Work in progress.
         :glob:
         :maxdepth: 1
 
-        example_notebooks/api_examples/guards/*
+        doc_notebooks/api_examples/guards/*
 
 .. _models_examples:
 
@@ -52,4 +52,4 @@ Work in progress.
         :glob:
         :maxdepth: 1
 
-        example_notebooks/api_examples/llm/*
+        doc_notebooks/api_examples/llm/*

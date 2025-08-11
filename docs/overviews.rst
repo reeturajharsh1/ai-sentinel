@@ -18,7 +18,7 @@ environment
         :glob:
         :maxdepth: 1
 
-        example_notebooks/environment/*
+        doc_notebooks/environment/*
 
 .. _supported_llm_services:
 
@@ -32,7 +32,7 @@ with minimal code changes. Currently, the following LLM services are supported:
 +---------------+----------------------------------+---------------------+-------------------------------------------------------+
 | Provider      | Models                           | Notes               | Example                                               |
 +===============+==================================+=====================+=======================================================+
-| Azure OpenAI  | GPT-4, GPT-4o, GPT-3.5-turbo     | ...                 | example_notebooks/api_examples/llm/azure_openai.ipynb |
+| Azure OpenAI  | GPT-4, GPT-4o, GPT-3.5-turbo     | ...                 | doc_notebooks/api_examples/llm/azure_openai.ipynb |
 +---------------+----------------------------------+---------------------+-------------------------------------------------------+
 | Google Gemini | Gemini 2.* Flash, Gemini 2.5 Pro | ...                 | ...                                                   |
 +---------------+----------------------------------+---------------------+-------------------------------------------------------+

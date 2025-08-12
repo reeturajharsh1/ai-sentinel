@@ -7,6 +7,9 @@ wheels/
 *.egg-info
 notebooks/ 
 tests/
+/docs/_build
+/docs/source/_autosummary
+
 
 # Virtual environments
 .venv

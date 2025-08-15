@@ -15,7 +15,7 @@ class ToxicityGuard:
 
     async def analyze_async(self, text: str) -> ToxicityResult: 
         '''
-        Analyze the toxicness in the user input using LLM-as-a-judge (async)
+        Analyze the toxicity in the user input using LLM-as-a-judge (async)
         Return the finished evaluation as a ToxicityResult object
         '''
         response: LLMResponse = await self.llm_client.generate_text_async(text, self.system_prompt, **self._structure_output())

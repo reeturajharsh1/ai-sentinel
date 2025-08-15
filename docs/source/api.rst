@@ -1,7 +1,7 @@
-.. currentmodule:: ai_sentinel
 
 API Reference
 =============
+
 This page contains the API reference for public objects and functions in ai_sentinel.
 
 
@@ -9,6 +9,7 @@ This page contains the API reference for public objects and functions in ai_sent
 
 core
 -----------
+
 .. autosummary::
    :toctree: _autosummary  
    :recursive:  
@@ -19,11 +20,10 @@ core
 
 guards 
 ----------
+
 .. autosummary::
    :toctree: _autosummary  
    :recursive:            
-
-    .. data models
 
     ai_sentinel.guards.toxicity_guard.ToxicityResult
     ai_sentinel.guards.toxicity_guard.ToxicityCategories
@@ -47,9 +47,11 @@ guards
 
 llm
 -----
+
 .. autosummary::
    :toctree: _autosummary  
    :recursive:
+
     ai_sentinel.llm.BaseLLMClient
     ai_sentinel.llm.AzureOpenAIClient
     ai_sentinel.llm.GeminiClient

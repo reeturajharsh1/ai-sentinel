@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -22,29 +22,13 @@ if os.path.exists(NOTEBOOKS_DIR):
     shutil.rmtree(NOTEBOOKS_DIR)
 shutil.copytree(os.path.abspath("../../docs_notebooks"), NOTEBOOKS_DIR)
 
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
-project = 'ai_sentinel'
-copyright = '2025, Althea Masetti Zannini'
-author = 'Althea Masetti Zannini'
-release = '0.0.6'
-
-# -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
-
-
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
     "sphinx_rtd_theme",
+    "nbsphinx",     # Allows parsing Jupyter notebooks
+    "myst_parser",  # Allows parsing Markdown, such as CONTRIBUTING.md
 ]
 
 # --- Extension options
@@ -58,6 +42,7 @@ autosectionlabel_prefix_document = True
 # [autosummary]
 autosummary_generate = True
 
+
 # Do not create toctree entries for each class/function
 toc_object_entries = False
 
@@ -69,13 +54,69 @@ templates_path = ['_templates']
 # source_suffix = ['.rst', '.md']
 source_suffix = ".rst"
 
-exclude_patterns = ["_build"]
-
 root_doc = 'index'
 
+# -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+project = 'ai_sentinel'
+copyright = '2025, Althea Masetti Zannini'
+author = 'Althea Masetti Zannini'
+
+# The version info for the project you're documenting, acts as replacement for
+# |version| and |release|, also used in various other places throughout the
+# built documents.
+#
+# The short X.Y version.
+version = "latest"
+# The full version, including alpha/beta/rc tags.
+release = "latest"
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+language = "en"
+
+exclude_patterns = ["_build"]
+pygments_style = "sphinx"
+
+nbsphinx_execute = 'never'
+# or for MyST-NB:
+nb_execution_mode = "off"
+
+# -- Release notes configuration ------------------------------------------
+
+# Make available a URL that points to the latest unreleased changes
+# TODO: WHEN PROJECT IS PUBLISHED, UNCOMMENT THIS CODE
+'''
+def get_latest_tag() -> str:
+    """Query GitHub API to get the most recent git tag"""
+    url = "https://api.github.com/repos/reeturajharsh1/ai-sentinel/releases/latest"
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()["tag_name"]
+
+
+_latest_tag = get_latest_tag()
+_url = f"https://github.com/reeturajharsh1/ai-sentinel/compare/{_latest_tag}...master"
+
+# Make an RST substitution that inserts the correct hyperlink
+rst_epilog = f"""
+.. |unreleasedchanges| replace:: {_latest_tag}...master
+.. _unreleasedchanges: {_url}
+"""
+'''
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+def setup(app):
+    import ai_sentinel
+
+    app.connect("build-finished", build_finished)
+
+def build_finished(app, exception):
+    if os.path.exists(NOTEBOOKS_DIR):
+        shutil.rmtree(NOTEBOOKS_DIR)

@@ -85,4 +85,3 @@ class ToxicityResult(BaseModel):
         
         self.score = expected_score
         return self
-        

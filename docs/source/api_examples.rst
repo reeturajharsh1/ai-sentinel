@@ -1,9 +1,9 @@
-.. currentmodule:: ai_sentinel
 
 .. _api_examples:
 
 API Examples
 ----------------
+
 Each object or function in ai_sentinel has a corresponding example 
 notebook here that demonstrates its API usage.The examples are here 
 to help you understand how to use the package effectively in your 

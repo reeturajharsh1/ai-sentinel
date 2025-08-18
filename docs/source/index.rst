@@ -16,7 +16,7 @@ Install
 
 AI Sentinel can be installed from either `PyPI <https://pypi.org/project/ai-sentinel/>`_ ::
 
-    pip install ai_sentinel
+    pip install ai-sentinel
     
 .. or # TEST THIS FIRST
    uv run --with ai-sentinel --no-project -- python -c "import ai_sentinel"

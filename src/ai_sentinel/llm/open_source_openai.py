@@ -7,7 +7,7 @@ from openai.types.chat.parsed_chat_completion import ParsedChatCompletion
 from ai_sentinel.llm.base import BaseLLMClient
 from ai_sentinel.core.models import LLMResponse
 
-class PythonOpenAIClient(BaseLLMClient):
+class OpenAIClient(BaseLLMClient):
     '''
     Client implementation for Open Source LLM using a local server 
     that offers compatibility with the OpenAI SDK
@@ -68,29 +68,44 @@ class PythonOpenAIClient(BaseLLMClient):
             'content': prompt
         })
 
-        try:
-            if response_format:
-                response: ParsedChatCompletion = await self.client.chat.completions.create(
-                    model=self.model,
-                    messages=message,
-                    temperature=temperature,
-                    response_format=response_format
-                )
-            else:
-                response: ChatCompletion = await self.client.chat.completions.create(
-                    model=self.model,
-                    messages=message,
-                    temperature=temperature
-                )
-        except Exception as e:
-            raise e('Error generating text from OpenAI compatible LLM: ', str(e))
-
+        print("Brefore request")
+        if response_format:
+            # use parse instead of create bc using structured output 
+            response: ParsedChatCompletion = self.client.chat.completions.parse(
+                model=self.model,
+                messages=message,
+                temperature=temperature,
+                response_format=response_format
+            )
+        else:
+            response: ChatCompletion = self.client.chat.completions.create(
+                model=self.model,
+                messages=message,
+                temperature=temperature
+            )
+        # try:
+        #     if response_format:
+        #         response: ParsedChatCompletion = await self.client.chat.completions.parse(
+        #             model=self.model,
+        #             messages=message,
+        #             temperature=temperature,
+        #             response_format=response_format
+        #         )
+        #     else:
+        #         response: ChatCompletion = await self.client.chat.completions.create(
+        #             model=self.model,
+        #             messages=message,
+        #             temperature=temperature
+        #         )
+        # except Exception as e:
+        #     raise #RuntimeError(f"Error generating text from OpenAI compatible LLM: {e}")
+        print("RAW RESPONSE:", response)
         formatted_response: LLMResponse = self._format_llm_response(response)
         return formatted_response
 
     def _format_llm_response(self, response: ChatCompletion | ParsedChatCompletion) -> LLMResponse:
         '''Convert response to built in Model type to a response type of LLMResponse'''
-
+        print("RESPONSE:", response)
         output: LLMResponse = LLMResponse(
             content= response.choices[0].message.content,
             model= self.model

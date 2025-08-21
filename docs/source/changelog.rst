@@ -1,14 +1,48 @@
 Changelog
-==========
+=========
 
-Version 0.0.6
---------------
-* Change authorship
+This document records all notable changes made to AI Sentinel.
 
-Version 0.0.2
+Latest Version
 --------------
-* Adjust authorship and maintainers
 
-Version 0.0.1
---------------
-* Initial release 
+To install the latest version::
+
+    pip install ai-sentinel
+
+For a specific version::
+
+    pip install ai-sentinel==0.0.6
+
+Version 0.0.6 (2025-08-21)
+--------------------------
+
+**Changed**
+
+* Updated package authorship information
+* Revised maintainer list
+
+Version 0.0.2 (2025-07-15)
+--------------------------
+
+**Changed**
+
+* Adjusted package authorship metadata
+* Updated maintainer information in package configuration
+* Refined documentation structure
+
+Version 0.0.1 (2025-07-01)
+--------------------------
+
+**Added**
+
+* Initial release of AI Sentinel
+* Core toxicity detection functionality
+* Basic LLM client implementations
+* Support for multiple AI providers
+* Basic documentation structure
+
+**Notes**
+
+* First public release on PyPI
+* Foundation for future development

@@ -14,6 +14,14 @@ For a specific version::
 
     pip install ai-sentinel==0.0.6
 
+Version 0.0.7 (2025-08-21)
+--------------------------
+
+**Changed**
+
+* Implemented integration with open-source LLMs via OpenAI compatibility server
+* Revised documentation to include new LLM integration details
+
 Version 0.0.6 (2025-08-21)
 --------------------------
 

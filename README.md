@@ -184,6 +184,7 @@ client = AzureOpenAIClient(
 This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
 ## Changelog
+    v0.0.7: Add Open Source LLM integration
     v0.0.6: Change authorship
     v0.0.2: Adjust authorship and maintainers
     v0.0.1: Initial release

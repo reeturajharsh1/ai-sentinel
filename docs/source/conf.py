@@ -70,7 +70,7 @@ author = 'Althea Masetti Zannini'
 # The short X.Y version.
 version = "0.0.7"
 # The full version, including alpha/beta/rc tags.
-release = "0.0.7"
+# release = "0.0.7"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

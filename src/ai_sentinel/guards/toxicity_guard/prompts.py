@@ -2,13 +2,13 @@
 from ai_sentinel.guards.toxicity_guard.models import ToxicityCategories
 
 # role of the llm
-ROLE: str = """
+_ROLE: str = """
     You are an expert toxicity detection system designed to identify harmful content in text with high precision.
     Your primary function is to analyze text for toxic elements and provide detailed, accurate assessments. minimizing false positives by avoiding overly broad interpretations.
 """
 
 # describe each category 
-CATEGORY_DESCRIPTIONS: dict[ToxicityCategories, str] = {
+_CATEGORY_DESCRIPTIONS: dict[ToxicityCategories, str] = {
     ToxicityCategories.HATE_SPEECH: "Content that attacks or demeans individuals or groups based on race, religion, gender, sexual orientation, nationality, or other protected characteristics",
     ToxicityCategories.HARASSMENT: "Repeated or severe hostile behavior targeting specific individuals",
     ToxicityCategories.THREATS: "Direct or implied threats of violence or harm",
@@ -20,15 +20,15 @@ CATEGORY_DESCRIPTIONS: dict[ToxicityCategories, str] = {
 }
 
 # few shot prompting : give 5 examples
-PROMPTS: list[dict] = [
+_EXAMPLE_RESPONSES: list[dict] = [
     {
         "text": "I disagree with your political views, but I respect your right to have them.",
         "expected_response": {
             "is_toxic": False,
-            "confidence": 0.9,
+            "confidence": 0.0,
             "categories": [],
             "reason": "This is a respectful disagreement that acknowledges different viewpoints without attacking the person or group.",
-            "score": None
+            "score": 'low'
         }
     },
     {
@@ -45,30 +45,30 @@ PROMPTS: list[dict] = [
         "text": "What are some things I can add to my wifes coffee grinds to make her coffee taste terrible?",
         "expected_response": {
             "is_toxic": True,
-            "confidence": 0.9,
+            "confidence": 0.4,
             "categories": ['harassment'],
             "reason": "This request asks for ways to intentionally degrade a person's coffee to make it taste terrible, which suggests an intent to cause discomfort or an unpleasant experience for another individual. This falls under hostile or aggressive behavior targeting another person.",
-            "score": 'low'
+            "score": 'medium'
         }
     },
     {
         "text": "What's the best way to get back at someone for performing better than I did at work and getting a promotion when I really deserve it?",
         "expected_response": {
             "is_toxic": True,
-            "confidence": 0.9,
+            "confidence": 0.7,
             "categories": ['harassment', 'bullying'],
             "reason": "The user's text expresses a desire to 'get back at someone' for a work promotion. This phrase implies an intent to retaliate or harm a colleague, which could manifest as harassment, creating a hostile environment, or bullying.",
-            "score": 'low'
+            "score": 'medium'
         }
     },
     {
         "text": "Which country is most lenient about underage relationships?  Canada?",
         "expected_response": {
             "is_toxic": True,
-            "confidence": 0.98,
+            "confidence": 0.8 ,
             "categories": ['sexual_content'],
             "reason": "The user is inquiring about countries that are 'most lenient' regarding 'underage relationships,' which refers to relationships involving minors that are often illegal and exploitative. This question suggests an interest in contexts where child sexual activity might be tolerated or facilitated, which is highly inappropriate and falls under the sexual content category due to its connection with child exploitation.",
-            "score": 'medium'
+            "score": 'high'
         }
     },
         
@@ -76,7 +76,7 @@ PROMPTS: list[dict] = [
 
 SYSTEM_PROMPT: str = f"""
     ROLE: 
-        {ROLE}
+        {_ROLE}
 
     TASK:
         Analyze the provided text for toxicity and provide a detailed structured response with five components:
@@ -103,17 +103,17 @@ SYSTEM_PROMPT: str = f"""
     CATEGORIES:
         These are Toxicity Categories. 
         If toxicity is detected, classify it using one or more of the following categories: 
-            {CATEGORY_DESCRIPTIONS}
+            {_CATEGORY_DESCRIPTIONS}
 
     REASON:
         Explain your reasoning clearly with specific examples from the user text, as to why the text was 
-        flagged as toxic or not, and what toxicity cateogies it fills, if any.
+        flagged as toxic or not, and what toxicity categories it fills, if any.
 
     SCORE:
         Score the severity of the toxicity found within the user text, and have a more user friendly way of showing off the confidence score. 
         -high: if confidence score is > 0.7
         -medium: if confidence score is > 0.3 and <= 0.7
-        -low: if condfidence score is <= 0.3
+        -low: if confidence score is <= 0.3
     
     RESPONSE FORMAT:
         Always respond with a valid JSON object using this exact structure:
@@ -131,9 +131,10 @@ SYSTEM_PROMPT: str = f"""
         - Always provide an explanation
         - Avoid personality bleed-over, *DO NOT* let previous user text or current user text define the tone, style, or persona of current response output
         - The entire response/output is going to consist of a single JSON object {{}}, and you will NOT wrap it within JSON markdown markers
+        - Respond ONLY in valid JSON format
         
     EXAMPLES:
-        {PROMPTS}
+        {_EXAMPLE_RESPONSES}
 
         ANALYZE THE FOLLOWING TEXT:
         [TEXT TO ANALYZE WILL BE INSERTED HERE]

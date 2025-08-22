@@ -14,7 +14,7 @@ AI Sentinel is a Python package designed to help developers integrate toxicity a
 ## Getting Started
 
 ### Installation
-ai-sentinel is avalible on [PyPI][test-pypi-link]
+ai-sentinel is avalible on [PyPI][pypi-link]
 
 ```bash
 pip install ai-sentinel
@@ -183,15 +183,21 @@ client = AzureOpenAIClient(
 
 This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
+## Changelog
+    v0.0.7: Add Open Source LLM integration
+    v0.0.6: Change authorship
+    v0.0.2: Adjust authorship and maintainers
+    v0.0.1: Initial release
+
+
 <!-- REFERENCE LINKS -->
 <!-- AI-SENTINEL RESOURCES -->
 [license]: ai-sentinel\LICENSE
 <!-- LLM API PROVIDERS -->
 [gemini]: https://ai.google.dev/tutorials/python_quickstart
 [azure-openai]: https://ai.azure.com/?tid=a8eec281-aaa3-4dae-ac9b-9a398b9215e7
-[athropic]: https://www.anthropic.com/
+[anthropic]: https://www.anthropic.com/
 [open-source-list]: https://huggingface.co/
 <!-- THIRD-PARTY RESOURCES -->
-[pypi-link]: https://pypi.org/project/readmeai/
-[test-pypi-link]: https://test.pypi.org/project/ai-sentinel/
+[pypi-link]: https://pypi.org/project/ai-sentinel/
 

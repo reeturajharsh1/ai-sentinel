@@ -15,10 +15,10 @@ class ToxicityGuard:
 
     async def analyze_async(self, text: str) -> ToxicityResult: 
         '''
-        Analyze the toxicness in the user input using LLM-as-a-judge (async)
+        Analyze the toxicity in the user input using LLM-as-a-judge (async)
         Return the finished evaluation as a ToxicityResult object
         '''
-        response: LLMResponse = await self.llm_client.generate_text_async(text, self.system_prompt, **self.structure_output())
+        response: LLMResponse = await self.llm_client.generate_text_async(text, self.system_prompt, **self._structure_output())
         toxicity_response: dict = json.loads(response.content)
 
         result = ToxicityResult(**toxicity_response)
@@ -29,13 +29,13 @@ class ToxicityGuard:
         Analyze the toxicness in the user input using LLM-as-a-judge (sync wrapper)
         Return the finished evaluation as a ToxicityResult object
         '''
-        response: LLMResponse = self.llm_client.generate_text(text, self.system_prompt, **self.structure_output())
+        response: LLMResponse = self.llm_client.generate_text(text, self.system_prompt, **self._structure_output())
         toxicity_response: dict = json.loads(response.content)
 
         result = ToxicityResult(**toxicity_response)
         return result
 
-    def structure_output(self) -> dict:
+    def _structure_output(self) -> dict:
         '''Return the nessessary args to generate structured output for the specific LLM client'''
         provider: str = self.llm_client.provider_name
         response_format: dict = {}

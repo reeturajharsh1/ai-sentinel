@@ -1,38 +1,50 @@
+"""
+from openai import OpenAI
+client = OpenAI(
+    base_url="http://localhost:8000/v1",
+    api_key="token-abc123",
+)
+
+completion = client.chat.completions.create(
+  model="NousResearch/Meta-Llama-3-8B-Instruct",
+  messages=[
+    {"role": "user", "content": "Hello!"}
+  ]
+)
+
+print(completion.choices[0].message)
+"""
+
 from typing import Optional, Any
 
-from openai import AzureOpenAI, AuthenticationError
+from openai import OpenAI, AuthenticationError
 from openai.types.chat.chat_completion import ChatCompletion
 from openai.types.chat.parsed_chat_completion import ParsedChatCompletion
 
 from ai_sentinel.llm.base import BaseLLMClient
 from ai_sentinel.core.models import LLMResponse
 
-class AzureOpenAIClient(BaseLLMClient):
-    '''Client implementation for Azure OpenAI LLM'''
+class OpenSourceVLLM(BaseLLMClient):
+    '''Open Source LLM client implementation using vLLM's server to create a OpenAI-Compatible Server'''
 
     def __init__(
             self, 
-            api_key: str, 
             model: str, 
-            api_version: str,
-            azure_endpoint: str,
+            api_base: str,
+            api_key: Optional[str] = 'EMPTY', # API key can be any string, as it's not validated by vLLM by default
             timeout: Optional[float] = 30.0, 
             **kwargs
         ):
-        super().__init__(api_key, model, timeout, **kwargs)
+        super().__init__(api_key, model, timeout, **kwargs)    
 
-        if not api_version or not isinstance(api_version, str):
-            raise ValueError('API version must be a non-empty string')
-        if not azure_endpoint or not isinstance(azure_endpoint, str):
-            raise ValueError('Azure Endpoint must be a non-empty string')
-        
-        self.api_version = api_version
-        self.azure_endpoint = azure_endpoint
+        if not api_base or not isinstance(api_base, str):
+            raise ValueError('Base URL must be a non-empty string')
 
-        self.client = AzureOpenAI( # create instance of azure open ai 
+        self.api_base = api_base
+
+        self.client = OpenAI( # call vllm server usin openai
             api_key=self.api_key,
-            api_version=self.api_version,
-            azure_endpoint=self.azure_endpoint,
+            base_url=api_base,
             timeout=self.timeout
         )
 
@@ -90,7 +102,7 @@ class AzureOpenAIClient(BaseLLMClient):
 
         output: LLMResponse = LLMResponse(
             content=response.choices[0].message.content,
-            model= self.model
+            model = self.model
         )
         output.usage = {
             'model_tokens': response.usage.completion_tokens,
@@ -102,30 +114,12 @@ class AzureOpenAIClient(BaseLLMClient):
         output.finish_reason = response.choices[0].finish_reason
         return output
 
-
     async def validate_async(self) -> bool:
         # make a simple API call
         try:
             self.client.models.list()
             # if call is successful then the key is valid
             return True
-        except AuthenticationError as e: # should I be catching these errors?
-            print(f'API key is invalid: {e}')
-            return False
         except Exception as e:
-            print(f'An unexpected error occurred during API key validation: {e}')
+            print(f'An unexpected error occurred while connecting to the LLM server: {e}')
             return False
-
-    @property
-    def provider_name(self) -> str:
-        return "azure_openai"
-    
-    @property
-    def info(self):
-        basic_info = super().info
-        basic_info['api_version'] = self.api_version
-        basic_info['azure_endpoint'] = self.azure_endpoint
-        
-        # print(f'API Version: {self.api_version}')
-        # print(f'Azure Endpoint: {self.azure_endpoint}')
-        return basic_info

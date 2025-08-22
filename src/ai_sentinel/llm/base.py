@@ -32,6 +32,8 @@ class BaseLLMClient(ABC):
     ) -> LLMResponse:
         '''
         Generate a response from LLM based on the prompt and optional inputs (async).
+
+        Warning: Implementations uses deprecated function "datetime.utcnow()"
         
         Parameters:
         prompt (str): User input
@@ -40,8 +42,6 @@ class BaseLLMClient(ABC):
         temperature (Optional[float]): What sampling temperature to use | default = 0.7
         **kwargs: Handles structured output ( ex. {'response_format': [Some Structure]} )
 
-        Returns:
-        LLMResponse: The LLM's output
         '''
         pass
 

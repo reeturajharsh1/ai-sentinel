@@ -21,6 +21,7 @@ Examples of using different LLM providers:
 
     example_notebooks/api_examples/llm/azure_openai
     example_notebooks/api_examples/llm/gemini
+    example_notebooks/api_examples/llm/open_source_openai
 
 
 Common Issues

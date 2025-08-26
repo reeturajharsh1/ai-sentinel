@@ -84,8 +84,9 @@ ai-sentinel is model agnostic, with support for the following LLM API services:
 |--------------------------------------|----------------------------------|-----------------------------------|
 | [Azure OpenAI][azure-openai]         | GPT-4, GPT-4o, GPT-3.5-turbo     | Industry-leading models           |
 | [Google Gemini][gemini]              | Gemini 2.0 Flash, Gemini 2.5 Pro | Latest Google technology          |
+| [Open Source LLMs][open-source-list] | Qwen3, GPT-oss, Meta Llama              | Uses [OpenAI Compatible Server's][os-explaination], so check if the server hosting the LLM implements the OpenAI API specifications for endpoints |
 | [Anthropic][anthropic]               | *To Be Implemented*              | Will be implemented in the future |
-| [Open Source LLMs][open-source-list] | *To Be Implemented*              | Will be implemented in the future |
+
 
 #### Gemini Usage
 ```python
@@ -101,6 +102,22 @@ client = GeminiClient(
 guard = ToxicityGuard(client)
 result = guard.analyze("Your text here")
 ```
+
+#### Open Source using OpenAI Usage
+```python
+from ai_sentinel import OpenAIClient, ToxicityGuard
+
+# Initialize an Open Source LLM Client
+client = OpenAIClient(
+    base_url="http://localhost:8000/v1",
+    model="Qwen/Qwen3-8B"
+)
+
+# Create and use toxicity guard
+guard = ToxicityGuard(client)
+result = guard.analyze("Your text here")
+```
+
 
 ## Output
 
@@ -184,6 +201,7 @@ client = AzureOpenAIClient(
 This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
 ## Changelog
+    v0.0.8: Update documentation
     v0.0.7: Add Open Source LLM integration
     v0.0.6: Change authorship
     v0.0.2: Adjust authorship and maintainers
@@ -198,6 +216,7 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [azure-openai]: https://ai.azure.com/?tid=a8eec281-aaa3-4dae-ac9b-9a398b9215e7
 [anthropic]: https://www.anthropic.com/
 [open-source-list]: https://huggingface.co/
+[os-explaination]: https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html
 <!-- THIRD-PARTY RESOURCES -->
 [pypi-link]: https://pypi.org/project/ai-sentinel/
 

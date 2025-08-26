@@ -22,7 +22,6 @@ class TransformersClient(BaseLLMClient):
             **kwargs
         ):
         super().__init__(api_key, model, timeout, **kwargs)
-        # write smth to check if model is a supported model???
 
         self.tokenizer = AutoTokenizer.from_pretrained(self.model)
         self.client = AutoModelForCausalLM.from_pretrained(self.model)
@@ -40,6 +39,7 @@ class TransformersClient(BaseLLMClient):
             raise ValueError('Prompt must be a non-empty string')
         
         message = []
+
         # check if there is a system prompt given
         if system_prompt:
             message.append({
@@ -112,4 +112,4 @@ class TransformersClient(BaseLLMClient):
             return False
     
     def provider_name(self):
-        return f'Transformers Open Source: {self.model}'
+        return 'transformers'

@@ -52,8 +52,8 @@ with minimal code changes. Currently, the following LLM services are supported:
      - Models (Examples)
      - Authentication
      - Notes
-   * - OpenAI Compatibility Server
-     - qwen3:0.6b
+   * - OpenAI Compatible Server
+     - Qwen, Meta Llama, etc.
      - Base URL
      - Used for open-source models using OpenAI's compatibility server
    * - Azure OpenAI

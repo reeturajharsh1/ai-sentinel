@@ -77,6 +77,7 @@ a common interface while handling provider-specific requirements.
    ai_sentinel.llm.BaseLLMClient
    ai_sentinel.llm.AzureOpenAIClient
    ai_sentinel.llm.GeminiClient
+   ai_sentinel.llm.OpenAIClient
 
 **Example Usage**
 
@@ -85,10 +86,10 @@ a common interface while handling provider-specific requirements.
 
         example_notebooks/api_examples/llm/azure_openai
         example_notebooks/api_examples/llm/gemini
+        example_notebooks/api_examples/llm/open_source_openai
 
 See Also
 --------
 - :doc:`usage` - For more detailed usage examples
 - :doc:`overviews` - For high-level package concepts
-- :doc:`api_examples` - For comprehensive API examples
 

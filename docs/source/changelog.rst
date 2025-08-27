@@ -12,7 +12,15 @@ To install the latest version::
 
 For a specific version::
 
-    pip install ai-sentinel==0.0.6
+    pip install ai-sentinel==0.0.8
+
+Version 0.0.8 (2025-08-26)
+--------------------------
+
+**Changed**
+
+* Updated documentation to include open-source LLM integration
+* Added example notebook for OpenAI compatibility server usage
 
 Version 0.0.7 (2025-08-21)
 --------------------------

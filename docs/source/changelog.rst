@@ -12,7 +12,22 @@ To install the latest version::
 
 For a specific version::
 
-    pip install ai-sentinel==0.0.8
+    pip install ai-sentinel==0.0.9
+
+Version 0.0.9 (2025-08-29)
+--------------------------
+
+**Added**
+
+* Added Read the Docs configuration (.readthedocs.yaml) for automated documentation publishing
+* Enhanced documentation build system with proper dependency management
+* Improved documentation setup with separate requirements for lightweight package installation
+
+**Changed**
+
+* Updated documentation dependencies in docs/requirements.txt
+* Optimized documentation build process for Read the Docs platform
+* Enhanced project structure for better documentation publishing workflow
 
 Version 0.0.8 (2025-08-26)
 --------------------------

@@ -201,6 +201,8 @@ client = AzureOpenAIClient(
 This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
 ## Changelog
+    v0.0.10: Add company branding and enhanced project metadata
+    v0.0.9: Add Read the Docs configuration and enhanced documentation
     v0.0.8: Update documentation
     v0.0.7: Add Open Source LLM integration
     v0.0.6: Change authorship
@@ -219,4 +221,3 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [os-explaination]: https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html
 <!-- THIRD-PARTY RESOURCES -->
 [pypi-link]: https://pypi.org/project/ai-sentinel/
-

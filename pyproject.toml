@@ -1,6 +1,6 @@
 [project]
 name = "ai-sentinel"
-version = "0.0.9"
+version = "0.0.10"
 description = "Helpful utilities for AI Sentinel toxicity detection"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -23,6 +23,12 @@ authors = [
     { name = "Althea Masetti Zannini", email = "althea.masettizannini@domyn.com" },
     { name = "Reetu Raj Harsh", email = "reeturaj.harsh@domyn.com" }
 ]
+
+[project.urls]
+Homepage = "https://github.com/reeturajharsh1/ai-sentinel"
+Repository = "https://github.com/reeturajharsh1/ai-sentinel.git"
+Documentation = "https://ai-sentinel.readthedocs.io/"
+Company = "https://www.domyn.com/"
 
 [build-system]
 requires = ["hatchling"]

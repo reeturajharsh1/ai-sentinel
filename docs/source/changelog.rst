@@ -12,7 +12,20 @@ To install the latest version::
 
 For a specific version::
 
-    pip install ai-sentinel==0.0.9
+    pip install ai-sentinel==0.0.10
+
+Version 0.0.10 (2025-08-29)
+--------------------------
+
+**Added**
+
+* Added company branding with Domyn website link in PyPI package metadata
+* Enhanced project URLs in package metadata for better discoverability
+
+**Changed**
+
+* Updated README changelog to include latest version information
+* Improved package metadata structure for professional presentation
 
 Version 0.0.9 (2025-08-29)
 --------------------------

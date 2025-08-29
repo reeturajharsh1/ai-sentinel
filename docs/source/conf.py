@@ -68,9 +68,9 @@ author = 'Althea Masetti Zannini'
 # built documents.
 #
 # The short X.Y version.
-version = "0.0.9"
+version = "0.0.10"
 # The full version, including alpha/beta/rc tags.
-# release = "0.0.9"
+# release = "0.0.10"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
